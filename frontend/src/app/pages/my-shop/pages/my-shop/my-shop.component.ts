@@ -8,32 +8,50 @@ import {ToastrService} from 'ngx-toastr';
 import {toTitleCase} from 'codelyzer/util/utils';
 import {Product, ProductsService} from '../../services/products.service';
 import {ProductCategory} from "../../../../models/Category";
+import {BehaviorSubject, forkJoin} from "rxjs";
 
 @UntilDestroy()
 @Component({
     selector: 'vex-my-shop',
     templateUrl: './my-shop.component.html',
     styleUrls: ['./my-shop.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 
 export class MyShopComponent {
-
+    products = new BehaviorSubject<Product[]>([]);
+    currentPage = 1;
+    totalPages = 1;
+    searchTerm = '';
+    currentCategory = -1;
 
     constructor(private layoutService: LayoutService,
                 private dialog: NgDialogAnimationService,
                 private shoppingCartService: ShoppingCartService,
                 public toaster: ToastrService,
                 public productsService: ProductsService) {
+        this.requestProducts();
+    }
+
+    private requestProducts() {
+        this.productsService.getProducts(this.searchTerm, this.currentPage, this.currentCategory).then(
+            data => {
+                this.totalPages = data.pages;
+                this.products.next(data.products);
+            },
+            () => {
+                this.toaster.error('couldn\'t get products from server', 'something went wrong!');
+            });
     }
 
     changeCategory(category: number) {
-        debugger
-        this.productsService.changeCategory(category);
+        this.currentCategory = category;
+        this.requestProducts();
     }
 
     searchProducts(searchStr: string) {
-        this.productsService.filteredProductsBySearchStr(searchStr);
+        this.searchTerm = searchStr;
+        this.requestProducts();
     }
 
     openShoppingCartDialog() {

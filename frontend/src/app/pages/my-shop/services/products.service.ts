@@ -39,12 +39,15 @@ export class ProductsService implements OnDestroy {
     public categories = new BehaviorSubject<ProductCategory[]>([]);
     public selectedCategoryId = -1;
     public products$ = this._products.asObservable();
+    public availPages = new BehaviorSubject<number>(1);
+    public currentPage = new BehaviorSubject<number>(1);
 
     constructor(private http: HttpClient, private constants: ConstantsService, private socketIO: SocketIoService,
                 public toaster: ToastrService, private usersService: UsersService) {
         socketIO.init();
         this.requestProducts();
         this.requestCategories();
+        this.pagination();
     }
 
 
@@ -69,16 +72,27 @@ export class ProductsService implements OnDestroy {
         return this.http.get<ProductReview[]>(this.constants.shop.http.products.review, {params: httpParams}).toPromise();
     }
 
-    private requestProducts(keyword?: string) {
-        let urlParams: Params = {page: 1, categoryId: this.selectedCategoryId};
+    public getProducts(keyword?: string, page: number = 1, categoryId: number = -1): Promise<any> {
+        let urlParams: Params = {page, categoryId};
+
+        if (keyword && keyword !== '') {
+            urlParams = {page, categoryId, keyword};
+        }
+
+        return this.http.get<Product[]>(this.constants.shop.http.products.get, {params: urlParams}).toPromise().catch();
+    }
+
+    private requestProducts(keyword?: string, page?: string, categoryId?: number) {
+        let urlParams: Params = {page: this.currentPage.value, categoryId: this.selectedCategoryId};
 
         if (keyword && keyword !== '') {
             urlParams = {page: 1, categoryId: this.selectedCategoryId, keyword};
         }
 
-        this.http.get<Product[]>(this.constants.shop.http.products.get, {params: urlParams}).toPromise().then(
+        this.http.get<any>(this.constants.shop.http.products.get, {params: urlParams}).toPromise().then(
             data => {
-                this._products.next(data);
+                this.availPages.next(data.pages);
+                this._products.next(data.products);
             },
             () => {
                 this.toaster.error('couldn\'t get products from server', 'something went wrong!');
@@ -157,5 +171,10 @@ export class ProductsService implements OnDestroy {
 
     uploadReview(review: ProductReview): Promise<any> {
         return this.http.post<any>(this.constants.shop.http.products.uploadReview, review).toPromise();
+    }
+
+
+    private pagination() {
+        this.availPages.subscribe(_ => this.requestProducts());
     }
 }
