@@ -1,0 +1,28 @@
+img {
+  max-height: 15rem;
+  margin: 1.5rem;
+}
+
+.price {
+  width: 7rem;
+}
+
+form {
+  text-align: initial !important;
+}
+
+.no-product-value {
+  height: 80vh;
+  font-family: monospace;
+
+  .text {
+    font-size: 7rem;
+    text-shadow: 0.2rem 0.2rem 0.2rem var(--elevation-z8);
+  }
+}
+
+mat-card-actions {
+  button {
+    margin-top: 0.5rem;
+  }
+}

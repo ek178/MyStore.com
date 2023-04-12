@@ -1,0 +1,27 @@
+<div *ngIf="shoppingCartService.cartProducts$ | async as cart" dir="ltr">
+    <div class="body-2 p-6 bg-primary text-primary-contrast" mat-dialog-title>
+        <p>MY</p>
+        <div class="display-1">{{ "shopping cart" | titlecase }}</div>
+        <div *ngIf="cart.length > 0" class="pb-3">
+            <div class="flex text-center pt-6">
+                <p class="text-xl text-primary-contrast font-light">{{ "current payment : " | titlecase }}</p>
+                <p class="pl-2 text-2xl font-semibold">{{ shoppingCartService.paymentSum | async | currency }}</p>
+            </div>
+        </div>
+    </div>
+
+    <mat-dialog-actions *ngIf="cart.length > 0" class="text-center mat-actions-padding">
+        <a id="payment-page-button" class="bg-primary text-xl text-primary-contrast font-light"
+           routerLink="/payment"
+           mat-button
+        (click)="onGoToPayment()">
+            {{ "go to payment" | titlecase }}
+        </a>
+    </mat-dialog-actions>
+    <div *ngIf="cart.length <= 0" class="p-6">no products in shopping cart</div>
+    <div *ngFor="let cartProduct of cart" class="p-3">
+        <vex-cart-product [id]="'cart-item-'+ cartProduct.product.name"
+                          [cartProduct]="cartProduct">
+        </vex-cart-product>
+    </div>
+</div>

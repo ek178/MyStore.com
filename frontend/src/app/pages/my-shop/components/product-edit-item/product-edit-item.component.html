@@ -1,0 +1,20 @@
+<div class="item">
+    <img class="rounded-full"
+         [src]="getProductImgSrc()">
+    <h6 class="text-primary name selectable">{{ product.name | uppercase }}</h6>
+
+    <div>
+        <h6 class="font-light pb-2 text-primary">Description</h6>
+        <p class="cut-text text-gray">{{ product.description ? product.description : "EMPTY" }}</p>
+    </div>
+
+    <div>
+        <h6 class="font-light pb-2 text-primary">Price</h6>
+        <p class="text-gray font-bold">{{ product.price | currency }}</p>
+    </div>
+
+    <div fxLayoutAlign="start center">
+        <p class="text-green font-light" *ngIf="product.inStock">In Stock</p>
+        <p class="text-red font-light" *ngIf="!product.inStock">Out Of Stock</p>
+    </div>
+</div>

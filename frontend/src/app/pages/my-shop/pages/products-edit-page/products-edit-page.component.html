@@ -1,0 +1,49 @@
+<div class="m-20 flow flex-row flex justify-around flex-wrap">
+    <div class="products">
+        <header class="mt-5 mb-5 gap-6" fxLayout="row" fxLayoutAlign="center center">
+            <div class="card rounded p-2 w-8/12">
+                <vex-product-search id="edit-page-search"
+                                    (searchProducts)="searchProducts($event)"></vex-product-search>
+            </div>
+            <button id="add-new-product-button" fxLayout="row" fxLayoutAlign="center center" class="add-button"
+                    type="button"
+                    (click)="addingProductMode = true"
+                    matTooltip="add new product">
+                <ic-icon [icIcon]="icAdd" size="2rem"></ic-icon>
+                ADD NEW
+            </button>
+        </header>
+        <section *ngIf="(products | async) as products" class="product-list">
+            <ng-container *ngIf="products.length <= 0">
+                <vex-no-results></vex-no-results>
+            </ng-container>
+            <mat-radio-group id="radio-edit-products-group">
+                <div class="radio-item card bg-primary-light m-3"
+                     *ngFor="let product of products; trackBy: trackByName">
+                    <mat-radio-button [id]="'radio-button-' + product.name"
+                                      color="primary" class="pl-3"
+                                      [value]="product" (click)="updateChosenProduct(product)">
+                    </mat-radio-button>
+                    <vex-product-edit-item [product]="product"></vex-product-edit-item>
+                </div>
+            </mat-radio-group>
+        </section>
+    </div>
+    <section>
+        <div class="no-product-value p-3" fxLayout="column" fxLayoutAlign="center start"
+             *ngIf="!addingProductMode && !(chosenProduct | async)">
+            <div class="text text-primary-light font-semibold">
+                {{"Welcome to edit page" | titlecase}}
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" class="text-primary text-xl">
+                <ic-icon [icIcon]="icEdit" size="3rem"></ic-icon>
+                Choose a product to edit
+            </div>
+        </div>
+        <vex-product-edit-form *ngIf="(chosenProduct | async)" [product]="chosenProduct | async"
+                               class="m-5 edit-part"></vex-product-edit-form>
+        <vex-product-add-form *ngIf="addingProductMode" (createdNewProduct)="createdNewProduct()"
+                              class="m-5 edit-part"></vex-product-add-form>
+    </section>
+
+</div>

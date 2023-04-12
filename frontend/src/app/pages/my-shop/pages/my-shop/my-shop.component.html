@@ -1,0 +1,25 @@
+<div class="py-14 header" id="home-header">
+    <div class="title block" fxLayout="row" fxLayoutAlign="center center">
+        <img class="w-12 pr-3" src="../../../../../assets/img/demo/logo.svg">
+        {{"MyStore" | titlecase}}
+    </div>
+    <section class="flex justify-center">
+
+    <vex-product-search class="card rounded-full p-2 w-9/12" (searchProducts)="searchProducts($event)"></vex-product-search>
+        <div class="w-3/12 ml-2">
+            <vex-select-category (changedCategory)="changeCategory($event.id)"></vex-select-category>
+        </div>
+
+    </section>
+
+    <vex-shopping-cart-button (openShoppingCart)="openShoppingCartDialog()" align="center"
+                              class="justify-center"></vex-shopping-cart-button>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="start" class="products-container">
+    <div class="p-6" *ngFor="let product of productsService.products$ | async">
+        <vex-product [id]="'home-' + product.name" [product]="product" (addToCart)="addToCart($event)"></vex-product>
+    </div>
+</div>
+<div class="container align-middle no-results" *ngIf="(productsService.products$ | async).length <= 0">
+    <vex-no-results></vex-no-results>
+</div>

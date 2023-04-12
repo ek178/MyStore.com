@@ -1,0 +1,23 @@
+<div class="card">
+    <button id="product-hover-section" (click)="openInfoDialog()">
+        <div *ngIf="showDescription | async" class="product-description bg-gray-light rounded-t">
+            <p class="font-bold">Description</p>
+            <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="viewport">
+                <p class=" pr-1">{{ product.description }}</p>
+            </cdk-virtual-scroll-viewport>
+        </div>
+
+        <img *ngIf="!(showDescription | async)" class="rounded-t" [src]="imageUrl">
+        <div class="card-content">
+            <h3 class="text-left">{{ product.name | titlecase }}</h3>
+            <h5 class="font-bold">{{ product.price | currency }}</h5>
+        </div>
+    </button>
+    <mat-divider></mat-divider>
+    <div class="card-buttons">
+        <button id="add-to-cart-button" mat-button type="button"
+                (click)="onAddToCart()">{{ "add to cart" | titlecase }}</button>
+    </div>
+
+
+</div>

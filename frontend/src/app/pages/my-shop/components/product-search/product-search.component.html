@@ -1,0 +1,5 @@
+<div class="search-bar">
+    <ic-icon class="search-icon" [icon]="icSearch" size="1.5rem"></ic-icon>
+    <input id="product-search-input" class="product-input" placeholder="Search products..." type="text" #input
+           (keyup)="onKeyUp(input.value)">
+</div>

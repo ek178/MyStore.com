@@ -1,0 +1,38 @@
+.products-edit {
+  display: grid;
+  grid-template-columns: 1fr 0.6fr;
+}
+
+cdk-virtual-scroll-viewport {
+  height: 75vh;
+}
+
+.product-input {
+  background-color: #C92228;
+}
+
+.edit-part {
+  min-width: 30rem;
+  width: 30vw;
+}
+
+.radio-item {
+  padding: 0.25rem;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 0.03fr 1fr;
+}
+
+.products {
+  min-width: 45rem;
+  width: 40vw;
+}
+
+.add-button {
+  @apply rounded shadow-6 items-center justify-center text-primary bg-primary-light pt-3 pb-3 pr-3 pl-2 text-xl font-semibold;
+}
+
+.product-list {
+  max-height: 77vh;
+  overflow-y: scroll;
+}

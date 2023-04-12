@@ -1,0 +1,139 @@
+<div class="w-full h-full bg-pattern" fxLayoutAlign="center center" dir="ltr">
+    <div @fadeInUp class="card overflow-hidden" style="width: 70rem">
+        <div class="pb-6">
+            <div class="p-6 pb-0">
+                <div class="fill-current" fxLayoutAlign="center center">
+                    <img class="w-16" src="assets/img/demo/logo.svg">
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <h2 class="title m-0">Let's create you an account!</h2>
+                <h4 class="body-2 text-secondary m-0">Simply fill out the form below</h4>
+            </div>
+        </div>
+
+        <mat-horizontal-stepper #matHorizontalStepper [linear]="true">
+            <ng-template matStepperIcon="edit">
+                <mat-icon [icIcon]="icDoneAll"></mat-icon>
+            </ng-template>
+
+            <ng-template matStepperIcon="done">
+                <mat-icon [icIcon]="icDoneAll"></mat-icon>
+            </ng-template>
+
+            <mat-step [stepControl]="accountFormGroup">
+                <form [formGroup]="accountFormGroup">
+                    <ng-template matStepLabel>Create Account</ng-template>
+
+                    <h2 class="title m-0">Create Account</h2>
+                    <div class="subheading-1">Set up your account for testing purposes.</div>
+
+                    <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+                        <mat-form-field fxFlex="auto">
+                            <mat-label>First Name</mat-label>
+                            <input formControlName="firstname" matInput required>
+                            <mat-hint>How may we call you?</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="auto">
+                            <mat-label>Last Name</mat-label>
+                            <input formControlName="lastname" matInput required>
+                            <mat-hint>How may we call you?</mat-hint>
+                        </mat-form-field>
+
+                        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                            <mat-form-field fxFlex="auto">
+                                <mat-label>E-Mail</mat-label>
+                                <input formControlName="email" matInput required>
+                                <mat-hint align="end">example@example.com</mat-hint>
+                            </mat-form-field>
+
+
+                        </div>
+                    </div>
+
+                    <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                        <button (click)="matHorizontalStepper.reset()" [disabled]="accountFormGroup.pristine"
+                                color="primary" mat-button
+                                type="button">RESET
+                        </button>
+                        <button [disabled]="accountFormGroup.invalid" color="primary" mat-raised-button matStepperNext>
+                            NEXT
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="passwordFormGroup">
+                <form [formGroup]="passwordFormGroup">
+                    <ng-template matStepLabel>Select a Password</ng-template>
+
+                    <h2 class="title m-0">Select a Password</h2>
+                    <div class="subheading-1">Enter your password you will use to log in.</div>
+
+                    <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+                        <mat-form-field fxFlex="auto">
+                            <mat-label>Account Username</mat-label>
+                            <input formControlName="username" matInput required>
+                            <mat-hint>This will be your unique login name.</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="auto">
+                            <mat-label>Password</mat-label>
+                            <input [type]="passwordInputType" formControlName="password" matInput required>
+                            <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button
+                                    matSuffix
+                                    type="button">
+                                <mat-icon [icIcon]="icVisibilityOff"></mat-icon>
+                            </button>
+                            <button (click)="hidePassword()" *ngIf="passwordInputType === 'text'" mat-icon-button
+                                    matSuffix
+                                    type="button">
+                                <mat-icon [icIcon]="icVisibility"></mat-icon>
+                            </button>
+                            <mat-hint>Your password should be atleast 6 characters long.</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                        <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                        <button [disabled]="passwordFormGroup.invalid" color="primary" mat-raised-button matStepperNext>
+                            NEXT
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step>
+                <form>
+                    <ng-template matStepLabel>Confirm Creation</ng-template>
+
+                    <div class="title m-0">You're almost there!</div>
+                    <div class="subheading-1">To finish registration, accept our terms of service and click on "Create
+                        Account".
+                    </div>
+
+                    <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+                        <mat-checkbox #adminCheck class="checkbox">
+                            I WANT TO BE AN ADMIN!!!
+                        </mat-checkbox>
+                    </div>
+
+                    <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                        <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                        <button (click)="submit()" color="primary"
+                                mat-raised-button
+                                matStepperNext
+                                type="button">
+                            CREATE ACCOUNT
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+        </mat-horizontal-stepper>
+
+        <h4 class="text-secondary text-center p-6">
+            Already have an account?<br/>
+            <a [routerLink]="['/login']">Sign in here</a>
+        </h4>
+    </div>
+</div>

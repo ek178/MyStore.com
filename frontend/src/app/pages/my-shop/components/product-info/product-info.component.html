@@ -1,0 +1,44 @@
+<section class="flex flex-row justify-end">
+    <section class="pl-3 w-full">
+        <h1 class="text-left font-light"> {{product.name}} </h1>
+        <h3 class="text-left font-bold  border-b border-black"> {{product.price | currency }} </h3>
+        <section class="description text-center mt-4">
+            <p>{{product.description}}</p>
+        </section>
+    </section>
+    <img class="w-7/12 h-auto" [src]="constantsService.shop.http.images.getImage(product.image)">
+
+</section>
+
+<div *ngIf="reviews | async as Reviews;">
+    <h5 *ngIf="Reviews.length > 0" class="font-medium mt-6 text-center"> Product Reviews</h5>
+    <section class="reviews-container text-left mt-2">
+        <div *ngFor="let review of Reviews" class="contrast-card p-2 mt-2">
+            <section class="flex justify-end">
+                <span class="font-bold"> {{review.user}} - {{review.rating}}/10</span>
+                <ic-icon [icIcon]="accountIcon" size="24px"></ic-icon>
+            </section>
+            <p class="mt-3 font-medium">{{review.comment}}</p>
+        </div>
+    </section>
+</div>
+
+<div *ngIf="canReview | async as CanReview">
+    <h5 class="font-medium mt-6 text-center"> Write A Review</h5>
+    <section class="write-review-container mt-4">
+        <form [formGroup]="formGroup" (ngSubmit)="submitReview()">
+            <mat-form-field appearance="outline" class="block w-full">
+                <textarea formControlName="review" placeholder="review" matInput></textarea>
+            </mat-form-field>
+            <section class="flex justify-end">
+                <button type="submit" mat-button color="primary" class="text-base font-bold">Publish a review</button>
+
+                <mat-form-field appearance="outline" class="block w-20">
+                    <mat-label>Score</mat-label>
+                    <input formControlName="score" matInput type="number" min="0" max="10"/>
+                    <mat-error> number must be between 0 - 10</mat-error>
+                </mat-form-field>
+            </section>
+        </form>
+    </section>
+</div>

@@ -1,0 +1,73 @@
+<ng-container *ngIf="product; else noProductValue">
+    <div class="card">
+        <div class="text-primary" fxLayout="column" fxLayoutAlign="center center">
+            <ic-icon class="p-1" [icIcon]="icEdit" size="2rem"></ic-icon>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <h1 class="font-light pr-3">product:</h1>
+                <h1>{{ product.name | uppercase }}</h1>
+            </div>
+            <img class="rounded border-primary" [src]="getProductImgSrc()">
+        </div>
+        <div class="p-5"><h1 class="title m-0 text-gray">Edit Product</h1>
+            <h4 class="subheading-1 text-gray">
+                Change the fields as you like. When you'd like to save your changes - press 'UPDATE'.
+            </h4>
+            <h4 class="subheading-1 text-gray">
+                *notice - name field can not be changed
+            </h4>
+        </div>
+        <form id="product-edit-form" [formGroup]="formGroup" class="p-5" fxLayout="column">
+            <mat-form-field fxFlex="auto">
+                <mat-label>Name</mat-label>
+                <input [value]="product.name" formControlName="name" matInput required>
+            </mat-form-field>
+
+            <div class="pb-6" fxLayout="row" fxLayoutAlign="start center">
+                <mat-slide-toggle id="inStock-slide-toggle" formControlName="inStock" #InStock [checked]="product.inStock">
+                    <p *ngIf="InStock.checked" class="text-green pl-2">In Stock</p>
+                    <p *ngIf="!InStock.checked" class="text-red pl-2">Out Of Stock</p>
+                </mat-slide-toggle>
+            </div>
+
+            <mat-form-field fxFlex="auto">
+                <mat-label>Description</mat-label>
+                <textarea id="description-textarea" [value]="product.description" formControlName="description" matInput></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="w-3/12">
+                <mat-label>Price</mat-label>
+                <input id="price-input" [value]="product.price" formControlName="price" matInput required>
+                <mat-error *ngIf="formGroup.get('price').hasError('pattern')">Only Positive number & Max 2 digits after
+                    the dot
+                </mat-error>
+            </mat-form-field>
+
+            <mat-card-actions fxLayout="row wrap" fxLayoutAlign="space-around center">
+                <button id="reset-button" (click)="resetForm()" [disabled]="!formGroup.dirty"
+                        color="primary" mat-button
+                        type="button">RESET
+                </button>
+                <button id="update-button" [disabled]="!(formGroup.valid && formGroup.dirty)" (click)="update()" color="primary"
+                        mat-raised-button>
+                    UPDATE PRODUCT
+                </button>
+                <button id="remove-button" (click)="remove()" color="warn" mat-raised-button>
+                    REMOVE PRODUCT
+                    <mat-icon [icIcon]="icTrash" class="text-white"></mat-icon>
+                </button>
+            </mat-card-actions>
+        </form>
+    </div>
+</ng-container>
+
+<ng-template #noProductValue>
+    <div class="no-product-value p-3" fxLayout="column" fxLayoutAlign="center start">
+        <div class="text text-primary-light font-semibold">
+            {{"Welcome to edit page" | titlecase}}
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" class="text-primary text-xl">
+            <ic-icon [icIcon]="icEdit" size="3rem"></ic-icon>
+            Choose a product to edit
+        </div>
+    </div>
+</ng-template>

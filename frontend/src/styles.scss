@@ -1,0 +1,93 @@
+@import "~simplebar/dist/simplebar.css";
+@import "~highlight.js/styles/androidstudio.css";
+// Vex Core
+@import "./@vex/styles/core";
+
+/*
+  You can override any CSS Variable or style here
+  Example:
+
+  :root {
+   --sidenav-background: #333333;
+  }
+
+  All possible variables can be found in @vex/styles/core or by simply inspecting the element you want to change
+  in Chrome/Firefox DevTools
+*/
+
+/**
+  Uncomment the below code and adjust the values to fit your colors, the application will automatically adjust
+ */
+:root {
+  // --color-primary: blue;
+  // --color-primary-contrast: white;
+
+  // --color-accent: yellow;
+  // --color-accent-contrast: black;
+
+  // --color-warn: yellow;
+  // --color-warn-contrast: black;
+}
+
+@import "~ngx-toastr/toastr.css";
+@import "~ngx-toastr/toastr";
+
+.custom-dialog-container {
+  mat-dialog-container {
+    padding: 0;
+
+  }
+
+  mat-dialog-content {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+mat-radio-button {
+  .mat-radio-label {
+    white-space: normal;
+  }
+}
+
+.mat-radio-label-content {
+  width: inherit;
+}
+
+mat-slide-toggle.mat-checked:not(.mat-disabled) {
+  .mat-slide-toggle-thumb {
+    background-color: green;
+  }
+  .mat-slide-toggle-bar {
+    background-color: yellowgreen;
+  }
+}
+
+
+mat-slide-toggle:not(.mat-disabled) {
+  .mat-slide-toggle-thumb {
+    background-color: red;
+  }
+  .mat-slide-toggle-bar {
+    background-color: orangered;
+  }
+}
+
+mat-form-field {
+  text-align: left !important;
+
+  .mat-input-element {
+    font: caption;
+  }
+}
+form input{
+  direction: ltr;
+}
+
+:not(p, h1, h2, h3, h6, h4, h5) {
+  user-select: none;
+}
+
+p, h1, h2, h3, h6, h4, h5 {
+  user-select: text !important;
+}

@@ -1,0 +1,18 @@
+<div class="grid gap-4 grid-cols-3 p-10">
+    <div *ngFor="let order of orders |  async">
+        <section class="flex flex-row justify-center">
+            <div class="card">
+                <section class="text-left p-4">
+                    <h4> Order: {{order._id}}#</h4>
+                    <h5> Shipping details</h5>
+                    <div> Country: {{order.shippingAddress.country}}</div>
+                    <div> City: {{order.shippingAddress.city}}</div>
+                    <div> Address: {{order.shippingAddress.address}}</div>
+                    <div> Postal Code: {{order.shippingAddress.postalCode}}</div>
+                    <div> Total Price: {{order.totalPrice}}$</div>
+                </section>
+                <vex-widget-table [columns]="tableColumns" [data]="order.orderItems"></vex-widget-table>
+            </div>
+        </section>
+    </div>
+</div>

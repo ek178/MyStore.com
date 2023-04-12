@@ -1,0 +1,51 @@
+<div class="card">
+    <div class="p-5"><h1 class="title m-0 text-gray">Add Product</h1>
+        <h4 class="subheading-1 text-gray">
+            Fill the fields with new product's details. At the end press 'CREATE'.
+        </h4>
+    </div>
+    <form id="add-product-form" [formGroup]="formGroup" class="p-5" fxLayout="column">
+        <mat-form-field fxFlex="auto">
+            <mat-label>Name</mat-label>
+            <input id="name-input" formControlName="name" matInput required>
+        </mat-form-field>
+
+        <div class="pb-6" fxLayout="row" fxLayoutAlign="start center">
+            <mat-slide-toggle id="inStock-slide-toggle" formControlName="inStock" #InStock>
+                <p *ngIf="InStock.checked" class="text-green pl-2">In Stock</p>
+                <p *ngIf="!InStock.checked" class="text-red pl-2">Out Of Stock</p>
+            </mat-slide-toggle>
+        </div>
+
+        <mat-form-field fxFlex="auto">
+            <mat-label>Description</mat-label>
+            <textarea id="description-textarea" formControlName="description" matInput></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="w-3/12">
+            <mat-label>Price</mat-label>
+            <input id="price-input" formControlName="price" matInput required>
+            <mat-error *ngIf="formGroup.get('price').hasError('pattern')">Only Positive number & Max 2 digits after
+                the dot
+            </mat-error>
+        </mat-form-field>
+
+        <vex-select-category (changedCategory)="changedCategory($event)"></vex-select-category>
+        <input type="file" name="profile" (change)="onChange($event)" />
+
+        <mat-card-actions fxLayout="row wrap" fxLayoutAlign="end center">
+            <button id="reset-button" (click)="formGroup.reset()" [disabled]="!formGroup.dirty"
+                    color="primary" mat-button
+                    type="button">RESET
+            </button>
+            <button id="create-button" (click)="create()" [disabled]="!(formGroup.valid)" color="primary"
+                    mat-raised-button>
+                CREATE
+            </button>
+        </mat-card-actions>
+
+
+
+
+    </form>
+</div>

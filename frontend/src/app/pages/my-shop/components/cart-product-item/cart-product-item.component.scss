@@ -1,0 +1,24 @@
+.cart-product {
+  display: grid;
+  grid-template-columns: 0.7fr 0.2fr 0.1fr;
+  align-items: center;
+  min-height: 5rem;
+}
+
+.product-image {
+  max-width: 45%;
+}
+
+.amount {
+  height: 100%;
+  align-items: center;
+
+  button{
+    &:hover {
+      font-weight: 700;
+      text-shadow: 0.2rem 0.2rem 0.2rem var(--elevation-z8);
+    }
+
+    @apply  text-3xl;
+  }
+}

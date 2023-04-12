@@ -1,0 +1,77 @@
+<div @fadeInUp class="card overflow-hidden">
+    <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+        <ng-template matStepperIcon="edit">
+            <mat-icon [icIcon]="icDoneAll"></mat-icon>
+        </ng-template>
+
+        <ng-template matStepperIcon="done">
+            <mat-icon [icIcon]="icDoneAll"></mat-icon>
+        </ng-template>
+
+        <mat-step [stepControl]="addressFormGroup">
+            <form [formGroup]="addressFormGroup">
+                <ng-template id="address-details-form-step" matStepLabel>Address Details</ng-template>
+
+                <h2 class="title m-0">Address Details</h2>
+                <div class="subheading-1">Where would you like your package to arrive.</div>
+
+                <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Country</mat-label>
+                        <input id="country-input" formControlName="country" matInput required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>City</mat-label>
+                        <input id="city-input" formControlName="city" matInput required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Street</mat-label>
+                        <input id="street-input" formControlName="street" matInput required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Postal Code</mat-label>
+                        <input id="houseNum-input" formControlName="postalCode" matInput required>
+                        <mat-error *ngIf="addressFormGroup.get('postalCode').hasError('pattern')">Has to be numeric value</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button id="reset-payment-button" (click)="stepper.reset()" [disabled]="addressFormGroup.pristine" color="primary" mat-button
+                            type="button">RESET
+                    </button>
+                    <button id="next-payment-button" [disabled]="addressFormGroup.invalid" color="primary" mat-raised-button matStepperNext>NEXT
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="confirmFormGroup">
+            <form [formGroup]="confirmFormGroup">
+                <ng-template id="payment-details-form-step" matStepLabel>Payment Details</ng-template>
+
+                <div class="title m-0">You're almost there!</div>
+                <div class="subheading-1">To finish you purchase please fill out the details below.
+                </div>
+
+
+                <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+                    <mat-checkbox id="terms-payment-checkbox" class="checkbox" formControlName="terms">
+                       are you sure all the details were correct
+                    </mat-checkbox>
+                </div>
+
+                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button id="previous-payment-button" color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                    <button id="purchase-payment-button" (click)="submit()" [disabled]="confirmFormGroup.invalid" color="primary" mat-raised-button
+                            matStepperNext>
+                        PURCHASE
+                    </button>
+                </div>
+            </form>
+
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>

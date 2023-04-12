@@ -1,0 +1,11 @@
+<div class="text-center p-6">
+    <a id="back-to-shop-button" class="rounded bg-primary text-xl text-primary-contrast font-bold"
+       routerLink="/"
+       mat-button>
+        {{ "back to shop" | uppercase }}
+    </a>
+</div>
+<div class="gap-6" fxLayoutAlign="center" fxLayout="row wrap">
+    <vex-payment-form class="payment-item"></vex-payment-form>
+    <vex-payment-summery-receipt class="payment-item"></vex-payment-summery-receipt>
+</div>

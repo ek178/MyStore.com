@@ -1,0 +1,13 @@
+<mat-form-field appearance="fill" >
+    <mat-label>Select category</mat-label>
+    <mat-select placeholder="category" (valueChange)="changeCategory($event)">
+        <mat-option [value]="defaultCategory">
+            <div class="h-6 w-6 align-middle ltr:mr-2 rtl:ml-2 rounded inline-block"></div>
+            <span>{{defaultCategory.name}}</span>
+        </mat-option>
+        <mat-option *ngFor="let category of productsService.categories | async"  [value]="category">
+            <div class="h-6 w-6 align-middle ltr:mr-2 rtl:ml-2 rounded inline-block"></div>
+            <span>{{ category.name }}</span>
+        </mat-option>
+    </mat-select>
+</mat-form-field>

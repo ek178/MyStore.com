@@ -1,0 +1,5 @@
+<button id="open-shopping-cart-button" (click)="openShoppingCartDialog()" matTooltip="shopping cart" type="button"
+        class="mr-2">
+    <mat-icon [icIcon]="icShoppingCart"></mat-icon>
+    <span class="item-badge bg-green text-gray-contrast">{{ shoppingCartService.totalProductsAmount | async }}</span>
+</button>

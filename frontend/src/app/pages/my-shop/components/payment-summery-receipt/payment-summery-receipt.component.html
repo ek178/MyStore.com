@@ -1,0 +1,6 @@
+<div class="card">
+    <vex-payment-summery-table></vex-payment-summery-table>
+    <div class="bg-primary-light text-primary text-xl p-3 font-light rounded-b">Total:
+        {{ shoppingCartService.paymentSum | async | currency }}
+    </div>
+</div>

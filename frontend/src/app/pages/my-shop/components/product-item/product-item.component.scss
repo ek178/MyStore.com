@@ -1,0 +1,34 @@
+.card {
+  width: 16rem;
+}
+
+.container {
+  padding-left: 1rem;
+}
+
+.card-content {
+  display: grid;
+  grid-template-columns: 1.7fr 0.3fr;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.card-buttons {
+  padding: 0.5rem 4rem 0.5rem 4rem;
+  display: grid;
+  color: rgb(var(--color-primary));
+
+  :hover {
+    background-color: rgb(var(--color-primary));
+    color: var(--background-card);
+  }
+}
+
+.product-description {
+  max-width: 16rem;
+  padding: 1rem;
+}
+
+.viewport {
+  height: 7.4rem;
+  width: 14rem;
+}

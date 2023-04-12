@@ -1,0 +1,42 @@
+<div fxLayoutAlign="space-between center" class="p-2" flex="auto">
+    <div class="text-primary text-xl font-light p-3" mat-dialog-title>{{ "my shopping summery" | titlecase }}</div>
+    <div class="pr-6">
+        <input id="payment-table-search-input" class="p-2 search bg-primary-light text-primary shadow-inner rounded"
+               placeholder="Search cart products..."
+               type="text" matInput #input>
+    </div>
+</div>
+<mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell class="text-center" *matCellDef="let cartProduct">{{ cartProduct.product.name }}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+        <mat-cell class="text-center" *matCellDef="let cartProduct">{{ cartProduct.amount }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="productTotal">
+        <mat-header-cell *matHeaderCellDef>{{ 'product total price' | titlecase }}</mat-header-cell>
+        <mat-cell class="text-center"
+                  *matCellDef="let cartProduct">{{ sumProductPrice(cartProduct) | currency }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row class="pl-20" *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <ng-container>
+        <mat-row class="pl-20" *matRowDef="let row; columns: displayedColumns"
+                 (click)="onRowClicked(row)">
+        </mat-row>
+    </ng-container>
+</mat-table>
+
+<ng-container fxLayoutAlign="center center" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+</ng-container>
+
+<mat-paginator id="payment-table-paginator" fxLayoutAlign="start" [length]="shoppingCartService.countCartProducts()"
+               [pageSize]="3"
+               [pageSizeOptions]="[3, 5, 10]"></mat-paginator>

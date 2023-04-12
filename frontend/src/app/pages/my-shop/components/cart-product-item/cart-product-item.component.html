@@ -1,0 +1,32 @@
+<div [id]="'cart-product-'+ cartProduct.product.name" class="bg-gray-light cart-product card">
+    <div class="flex">
+        <div class="product-image">
+            <img class="rounded-l" [src]="constantsService.shop.http.images.getImage(cartProduct.product.image)">
+        </div>
+        <div class="pl-3 pt-3 align-middle">
+            <h3 id="cart-product-name" class="font-bold">
+                {{ cartProduct.product.name }}
+            </h3>
+            <div class="flex">
+                <h5 class="text-primary text font-bold pr-1">sum:</h5>
+                <h5>{{ cartProduct.product.price * cartProduct.amount | currency }}</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="amount flex">
+        <button matTooltip="add 1" id="increase-amount-button" class="text-green" type="button"
+                (click)="setNewAmount(cartProduct.amount + 1)">+
+        </button>
+        <h2 class="p-3">{{ cartProduct.amount }}</h2>
+        <button id="decrease-amount-button" matTooltip="remove 1" class="text-red " type="button"
+                (click)="setNewAmount(cartProduct.amount - 1)">-
+        </button>
+    </div>
+
+    <div class="rounded-l flex text-4xl pr-1">
+        <button id="remove-button" type="button" (click)="setNewAmount(0)">
+            <mat-icon matTooltip="remove from cart" [icIcon]="icTrash" class="text-primary"></mat-icon>
+        </button>
+    </div>
+</div>

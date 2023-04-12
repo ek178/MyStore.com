@@ -1,0 +1,15 @@
+.search-bar {
+  display: grid;
+  grid-template-columns: 0.2fr 1.8fr;
+  align-items: center;
+
+  .search-icon {
+    padding: 0.5rem;
+  }
+}
+
+.product-input {
+  @apply outline-none font-medium;
+  font-size: 1rem;
+  width: auto;
+}
