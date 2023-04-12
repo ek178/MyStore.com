@@ -9,7 +9,7 @@
 
 ```bash
 1 Clone This Repo
-2 cd backend/myStore
+2 cd backend
 3 pip install -r requirements.txt 
 4 python manage.py runserver
 ```
@@ -28,4 +28,6 @@ username: admin
 password: admin
 
 dockerfile included within front and back directories
-
+	
+## Live Website 
+will be up soon 
