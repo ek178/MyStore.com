@@ -36,7 +36,11 @@ export class UsersService {
     ) {
         constants.init();
 
+        this.getProfileByToken();
         this.initUserToken();
+    }
+    private getProfileByToken() {
+        this.userToken.subscribe(token => this.getProfile());
     }
 
     private initUserToken() {
@@ -44,7 +48,6 @@ export class UsersService {
 
         if (existingToken) {
             this.userToken.next(existingToken);
-            this.getProfile();
         }
     }
 
@@ -91,15 +94,20 @@ export class UsersService {
     }
 
     auth(username: string, password: string) {
+        debugger
         this.http.post<string>(this.constants.shop.http.users.authenticate, {
             username,
             password
         }).toPromise().then(token => {
+                debugger
                 this.updateUserToken(token);
             }
         );
     }
 
+    public getUser() {
+        return this._connectedUser.value;
+    }
 
     private getProfile() {
         this.http.get<User>(this.constants.shop.http.users.getUser).toPromise().then(
@@ -150,5 +158,11 @@ export class UsersService {
 
     private stringToHash(string: string) {
         return shajs('sha256').update({string}).digest('hex');
+    }
+
+
+    // tslint:disable-next-line:variable-name
+    editUser(first_name: string, last_name: string, email: string) {
+        this.http.put(this.constants.shop.http.users.editUser, {first_name, last_name, email}).toPromise().then( _ => this.getProfile() );
     }
 }

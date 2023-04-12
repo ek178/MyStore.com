@@ -47,7 +47,6 @@ export class ProductsService implements OnDestroy {
         socketIO.init();
         this.requestProducts();
         this.requestCategories();
-        this.pagination();
     }
 
 
@@ -72,21 +71,21 @@ export class ProductsService implements OnDestroy {
         return this.http.get<ProductReview[]>(this.constants.shop.http.products.review, {params: httpParams}).toPromise();
     }
 
-    public getProducts(keyword?: string, page: number = 1, categoryId: number = -1): Promise<any> {
-        let urlParams: Params = {page, categoryId};
+    public getProducts(keyword?: string, page: number = 1, categoryId: number = -1, itemsPerPage: number = 10): Promise<any> {
+        let urlParams: Params = {page, categoryId, itemsPerPage};
 
         if (keyword && keyword !== '') {
-            urlParams = {page, categoryId, keyword};
+            urlParams = {page, categoryId, keyword, itemsPerPage};
         }
 
         return this.http.get<Product[]>(this.constants.shop.http.products.get, {params: urlParams}).toPromise().catch();
     }
 
-    private requestProducts(keyword?: string, page?: string, categoryId?: number) {
-        let urlParams: Params = {page: this.currentPage.value, categoryId: this.selectedCategoryId};
+    private requestProducts(keyword?: string, page?: string, categoryId?: number, ) {
+        let urlParams: Params = {page: this.currentPage.value, categoryId: this.selectedCategoryId, itemsPerPage: 20};
 
         if (keyword && keyword !== '') {
-            urlParams = {page: 1, categoryId: this.selectedCategoryId, keyword};
+            urlParams = {page: 1, categoryId: this.selectedCategoryId, keyword, itemsPerPage: 20};
         }
 
         this.http.get<any>(this.constants.shop.http.products.get, {params: urlParams}).toPromise().then(
@@ -174,7 +173,4 @@ export class ProductsService implements OnDestroy {
     }
 
 
-    private pagination() {
-        this.availPages.subscribe(_ => this.requestProducts());
-    }
 }

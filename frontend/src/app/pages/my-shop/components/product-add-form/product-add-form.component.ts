@@ -43,7 +43,6 @@ export class ProductAddFormComponent implements OnInit {
     }
 
     create() {
-        debugger
         this.productsService.add({
             name: this.formGroup.value.name,
             price: parseFloat(this.formGroup.value.price),

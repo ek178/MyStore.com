@@ -5,7 +5,8 @@
     </div>
     <section class="flex justify-center">
 
-    <vex-product-search class="card rounded-full p-2 w-9/12" (searchProducts)="searchProducts($event)"></vex-product-search>
+        <vex-product-search class="card rounded-full p-2 w-9/12"
+                            (searchProducts)="searchProducts($event)"></vex-product-search>
         <div class="w-3/12 ml-2">
             <vex-select-category (changedCategory)="changeCategory($event.id)"></vex-select-category>
         </div>
@@ -15,11 +16,20 @@
     <vex-shopping-cart-button (openShoppingCart)="openShoppingCartDialog()" align="center"
                               class="justify-center"></vex-shopping-cart-button>
 </div>
-<div fxLayout="row wrap" fxLayoutAlign="start" class="products-container">
-    <div class="p-6" *ngFor="let product of productsService.products$ | async">
-        <vex-product [id]="'home-' + product.name" [product]="product" (addToCart)="addToCart($event)"></vex-product>
+
+<section *ngIf="products | async as Products; else loading">
+    <mat-paginator [pageSizeOptions]="[5,10,20]" [pageSize]="10" [length]="totalProducts | async"
+                   (page)="pageChanged($event)"></mat-paginator>
+    <div fxLayout="row wrap" fxLayoutAlign="start" class="products-container">
+        <div class="p-6" *ngFor="let product of Products">
+            <vex-product [id]="'home-' + product.name" [product]="product"
+                         (addToCart)="addToCart($event)"></vex-product>
+        </div>
     </div>
-</div>
-<div class="container align-middle no-results" *ngIf="(productsService.products$ | async).length <= 0">
-    <vex-no-results></vex-no-results>
-</div>
+</section>
+<ng-template #loading>
+    <div class="container align-middle no-results">
+        <vex-no-results></vex-no-results>
+    </div>
+</ng-template>
+

@@ -20,6 +20,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSelectModule} from "@angular/material/select";
 import {SelectCategoryModule} from "../../components/select-category/select-category.module";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
     declarations: [MyShopComponent, ShoppingCartButtonComponent, ShoppingCartDialogComponent, ProductSearchComponent, ProductItemComponent, NoResultsComponent, CartProductItemComponent],
@@ -38,6 +39,7 @@ import {SelectCategoryModule} from "../../components/select-category/select-cate
         FlexLayoutModule,
         MatSelectModule,
         SelectCategoryModule,
+        MatPaginatorModule,
     ],
     exports: [
         ProductSearchComponent,

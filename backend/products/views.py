@@ -25,6 +25,7 @@ from .serializers import *
 @csrf_exempt
 @api_view(['GET'])
 def getProducts(request):
+    itemsPerPage = request.query_params.get('itemsPerPage')
     query = request.query_params.get('keyword')
     category = request.query_params.get('categoryId')
     if query is None:
@@ -36,7 +37,7 @@ def getProducts(request):
         products = Product.objects.filter(name__icontains=query, category=category).order_by('-price')
 
     page = request.query_params.get('page')
-    paginator = Paginator(products, 12)
+    paginator = Paginator(products, itemsPerPage)
 
     try:
         products = paginator.page(page)
@@ -50,7 +51,10 @@ def getProducts(request):
     page = int(page)
 
     serializer = ProductSerializer(products, many=True)
-    return JsonResponse(serializer.data, status=201, safe=False)
+    res = {}
+    res['products'] = serializer.data
+    res['totalProducts'] = paginator.count
+    return JsonResponse(res, status=201, safe=False)
 
 
 @csrf_exempt

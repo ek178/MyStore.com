@@ -7,7 +7,7 @@
             </cdk-virtual-scroll-viewport>
         </div>
 
-        <img *ngIf="!(showDescription | async)" class="rounded-t" [src]="imageUrl">
+        <img *ngIf="!(showDescription | async)" class="rounded-t img-sizing" [src]="imageUrl">
         <div class="card-content">
             <h3 class="text-left">{{ product.name | titlecase }}</h3>
             <h5 class="font-bold">{{ product.price | currency }}</h5>

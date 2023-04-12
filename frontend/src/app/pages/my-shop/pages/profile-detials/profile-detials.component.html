@@ -1,1 +1,48 @@
-<p>profile-detials works!</p>
+<div class="absolute h-full w-full bg-pattern">
+    <div @fadeInUp class="card overflow-hidden mt-40 p-6 m-auto" style="width: 70rem">
+        <div class="pb-6">
+            <div class="p-6 pb-0">
+                <div class="fill-current" fxLayoutAlign="center center">
+                    <img class="w-16" src="assets/img/demo/logo.svg">
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <h2 class="title m-0">Edit your profile</h2>
+                <h4 class="body-2 text-secondary m-0">Simply fill out the form below</h4>
+            </div>
+        </div>
+
+                <form [formGroup]="accountFormGroup">
+                    <h2 class="title m-0">Create Account</h2>
+
+                    <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+                        <mat-form-field fxFlex="auto">
+                            <mat-label>First Name</mat-label>
+                            <input formControlName="firstname" matInput required>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="auto">
+                            <mat-label>Last Name</mat-label>
+                            <input formControlName="lastname" matInput required>
+                        </mat-form-field>
+
+                        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                            <mat-form-field fxFlex="auto">
+                                <mat-label>E-Mail</mat-label>
+                                <input formControlName="email"  type="email" email="true" matInput required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                        <button [disabled]="accountFormGroup.pristine"
+                                color="primary" mat-button
+                                type="button">RESET
+                        </button>
+                        <button [disabled]="accountFormGroup.invalid" (click)="editProfile()" color="primary" mat-raised-button >
+                            EDIT PROFILE
+                        </button>
+                    </div>
+                </form>
+    </div>
+</div>

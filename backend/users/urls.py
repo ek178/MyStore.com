@@ -12,6 +12,7 @@ urlpatterns = [
     path('login/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('register/', RegisterView.as_view(), name='register'),
     path('profile/', getUserProfile,name="user_profile"),
+    path('updateUser/', updateUserProfile,name="user_profile"),
 
     # path('auth/', obtain_auth_token)
 

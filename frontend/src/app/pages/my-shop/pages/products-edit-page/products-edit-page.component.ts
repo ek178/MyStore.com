@@ -48,6 +48,7 @@ export class ProductsEditPageComponent {
     }
 
     searchProducts(searchStr: string) {
+        debugger
         this.productsService.filteredProductsBySearchStr(searchStr);
     }
 

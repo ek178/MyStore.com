@@ -9,21 +9,23 @@ import {toTitleCase} from 'codelyzer/util/utils';
 import {Product, ProductsService} from '../../services/products.service';
 import {ProductCategory} from "../../../../models/Category";
 import {BehaviorSubject, forkJoin} from "rxjs";
+import {PageEvent} from "@angular/material/paginator";
 
 @UntilDestroy()
 @Component({
     selector: 'vex-my-shop',
     templateUrl: './my-shop.component.html',
     styleUrls: ['./my-shop.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MyShopComponent {
     products = new BehaviorSubject<Product[]>([]);
     currentPage = 1;
-    totalPages = 1;
+    totalProducts = new BehaviorSubject<number>(1);
     searchTerm = '';
     currentCategory = -1;
+    itemsPerPage = 10;
 
     constructor(private layoutService: LayoutService,
                 private dialog: NgDialogAnimationService,
@@ -34,15 +36,28 @@ export class MyShopComponent {
     }
 
     private requestProducts() {
-        this.productsService.getProducts(this.searchTerm, this.currentPage, this.currentCategory).then(
+        this.productsService.getProducts(this.searchTerm, this.currentPage, this.currentCategory, this.itemsPerPage).then(
             data => {
-                this.totalPages = data.pages;
+                debugger
+                this.totalProducts.next(data.totalProducts);
                 this.products.next(data.products);
             },
             () => {
-                this.toaster.error('couldn\'t get products from server', 'something went wrong!');
+                this.toaster.error('couldn\'t get products from server', 'something went wrong! haha');
             });
     }
+
+    itemsPerPageChanged(num: number) {
+        this.itemsPerPage = num;
+        this.requestProducts();
+    }
+
+    pageChanged(pageEvent: PageEvent) {
+        this.currentPage = pageEvent.pageIndex;
+        this.itemsPerPage = pageEvent.pageSize;
+        this.requestProducts();
+    }
+
 
     changeCategory(category: number) {
         this.currentCategory = category;

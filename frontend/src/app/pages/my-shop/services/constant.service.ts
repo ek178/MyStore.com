@@ -26,6 +26,7 @@ export interface Shop {
             updateOne: string
         };
         users: {
+            editUser: string;
             updateCart: string,
             authenticate: string,
             getUser: string,
@@ -83,6 +84,7 @@ export class ConstantsService {
                     updateOne: `${productsRoot}/update/`
                 },
                 users: {
+                    editUser: `${usersRoot}/updateUser/`,
                     updateCart: `${usersRoot}/update-cart/`,
                     authenticate: `${usersRoot}/login/`,
                     getUser: `${usersRoot}/profile/`,

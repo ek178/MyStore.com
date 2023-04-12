@@ -14,7 +14,6 @@ export class SelectCategoryComponent {
   }
 
   changeCategory(category: ProductCategory) {
-    debugger
     this.changedCategory.emit(category);
   }
 
