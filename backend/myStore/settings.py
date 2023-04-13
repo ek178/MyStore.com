@@ -32,6 +32,7 @@ CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
                       'content-type', 'accept', 'origin', 'authorization')
 
 CORS_ALLOWED_ORIGINS = [
+    "https://mystore-angular.onrender.com",
     "http://localhost:4200",
 ]
 # Application definition
