@@ -49,10 +49,10 @@ export class ConstantsService {
 
     constructor(private http: HttpClient) {
         // For dev
-         this.urlRoot = `http://${window.location.hostname}:8000`;
+        // this.urlRoot = `http://${window.location.hostname}`;
 
         // For Prod
-        // this.urlRoot = 'https://mystore-django-3-11-2.onrender.com';
+         this.urlRoot = 'https://mystore-django-3-11-2.onrender.com';
     }
 
     public init() {
