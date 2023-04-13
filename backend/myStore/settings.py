@@ -48,12 +48,12 @@ CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOWED_ORIGINS = [
-    "https://mystore-angular.onrender.com",
-    "http://localhost:4200",
-    "https://643781c6f1730b45c39c0612--storied-pony-6bc7dd.netlify.app",
-    origin
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://mystore-angular.onrender.com",
+#     "http://localhost:4200",
+#     "https://genuine-gumption-477c34.netlify.app",
+#     origin
+# ]
 # Application definition
 
 INSTALLED_APPS = [
