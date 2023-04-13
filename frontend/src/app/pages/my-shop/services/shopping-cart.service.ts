@@ -4,16 +4,18 @@ import {map} from 'rxjs/operators';
 import {LocalStorageService} from "./local-storage.service";
 import {Product} from "./products.service";
 
-export interface CartProduct {
+export interface OrderItem {
     product: Product;
     amount: number;
+    order?: number;
+    _id?: number;
 }
 
 @Injectable({
     providedIn: 'root'
 })
 export class ShoppingCartService {
-    private _cartProducts = new BehaviorSubject<CartProduct[]>([]);
+    private _cartProducts = new BehaviorSubject<OrderItem[]>([]);
     cartProducts$ = this._cartProducts.asObservable();
     paymentSum: Observable<number>;
     totalProductsAmount: Observable<number>;
@@ -65,7 +67,7 @@ export class ShoppingCartService {
         return this.localStorageService.getItem('cartProducts');
     }
 
-    private findProductInCart(productName: string): CartProduct {
+    private findProductInCart(productName: string): OrderItem {
         return this._cartProducts.value.find(cartProduct => cartProduct.product.name === productName);
     }
 
@@ -79,12 +81,12 @@ export class ShoppingCartService {
     }
 
     private addNewCartProduct(product: Product) {
-        const updatedCart: CartProduct[] = [...this._cartProducts.value];
+        const updatedCart: OrderItem[] = [...this._cartProducts.value];
         updatedCart.push({product, amount: 1});
         return updatedCart;
     }
 
-    private setAmount(cartProductName: string, newAmount: number): CartProduct[] {
+    private setAmount(cartProductName: string, newAmount: number): OrderItem[] {
         return this._cartProducts.value.map(cartProduct => {
             if (cartProduct.product.name === cartProductName) {
                 cartProduct.amount = newAmount;
@@ -93,7 +95,7 @@ export class ShoppingCartService {
         });
     }
 
-    private deleteProductFromCart(productName: string): CartProduct[] {
+    private deleteProductFromCart(productName: string): OrderItem[] {
         const updatedCart = [...this._cartProducts.value];
         const index = updatedCart.findIndex(cartProduct => cartProduct.product.name === productName);
         updatedCart.splice(index, 1);
@@ -106,12 +108,12 @@ export class ShoppingCartService {
         }
     }
 
-    saveShoppingCartInStorage(cart: CartProduct[]) {
+    saveShoppingCartInStorage(cart: OrderItem[]) {
         this._cartProducts.next(cart);
         this.localStorageService.setItem('cartProducts', cart);
     }
 
-    getShoppingCart(): CartProduct[] {
+    getShoppingCart(): OrderItem[] {
         return this._cartProducts.value;
     }
 

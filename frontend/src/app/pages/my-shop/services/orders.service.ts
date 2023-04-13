@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CartProduct, ShoppingCartService} from './shopping-cart.service';
+import {OrderItem, ShoppingCartService} from './shopping-cart.service';
 import {User, UsersService} from './users.service';
 import {ToastrService} from "ngx-toastr";
 import {HttpClient} from "@angular/common/http";
@@ -7,10 +7,11 @@ import {Params, Router} from "@angular/router";
 import {ConstantsService} from "./constant.service";
 
 export interface Order {
-    orderItems: CartProduct[];
+    orderItems: OrderItem[];
     shippingAddress: ShippingAddress;
     user: User;
     totalPrice: number;
+    createdAt?: string;
     _id?: number;
 }
 
@@ -42,7 +43,7 @@ export class OrdersService {
 
     didBuyProduct(productName: string): Promise<boolean> {
         const params: Params = {productName};
-        return this.http.get<boolean>(this.constants.shop.http.orders.didBuyProduct, {params: params}).toPromise();
+        return this.http.get<boolean>(this.constants.shop.http.orders.didBuyProduct, {params}).toPromise();
     }
 
 

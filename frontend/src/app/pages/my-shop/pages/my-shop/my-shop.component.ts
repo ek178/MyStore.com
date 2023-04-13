@@ -38,7 +38,6 @@ export class MyShopComponent {
     private requestProducts() {
         this.productsService.getProducts(this.searchTerm, this.currentPage, this.currentCategory, this.itemsPerPage).then(
             data => {
-                debugger
                 this.totalProducts.next(data.totalProducts);
                 this.products.next(data.products);
             },

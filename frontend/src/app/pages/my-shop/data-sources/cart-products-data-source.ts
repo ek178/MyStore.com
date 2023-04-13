@@ -1,10 +1,10 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {CartProduct, ShoppingCartService} from '../services/shopping-cart.service';
+import {OrderItem, ShoppingCartService} from '../services/shopping-cart.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {delay} from "rxjs/operators";
 
-export class CartProductsDataSource implements DataSource<CartProduct> {
-    private cartProductsSubject = new BehaviorSubject<CartProduct[]>([]);
+export class CartProductsDataSource implements DataSource<OrderItem> {
+    private cartProductsSubject = new BehaviorSubject<OrderItem[]>([]);
     private loadingSubject = new BehaviorSubject<boolean>(false);
 
     public loading$ = this.loadingSubject.asObservable();
@@ -12,7 +12,7 @@ export class CartProductsDataSource implements DataSource<CartProduct> {
     constructor(private shoppingCartService: ShoppingCartService) {
     }
 
-    connect(collectionViewer: CollectionViewer): Observable<CartProduct[] | ReadonlyArray<CartProduct>> {
+    connect(collectionViewer: CollectionViewer): Observable<OrderItem[] | ReadonlyArray<OrderItem>> {
         return this.cartProductsSubject.asObservable();
     }
 

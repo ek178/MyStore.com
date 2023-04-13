@@ -15,7 +15,6 @@ export class OnlyAdminsGuard implements CanActivate {
             this.location.replaceState('');
             return true;
         }
-        window.alert('you are not allowed here');
         this.location.replaceState('/');
         this.router.navigateByUrl('/').then();
         return false;

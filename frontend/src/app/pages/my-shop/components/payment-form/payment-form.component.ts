@@ -44,9 +44,9 @@ export class PaymentFormComponent implements OnInit {
          * @type {FormGroup}
          */
         this.addressFormGroup = this.fb.group({
-            country: [null, Validators.required],
-            city: [null, Validators.required],
-            street: [null, Validators.required],
+            country: [null, [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
+            city: [null, [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]],
+            street: [null, [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]],
             postalCode: [null,
                 Validators.compose(
                     [

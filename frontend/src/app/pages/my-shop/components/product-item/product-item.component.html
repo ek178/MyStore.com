@@ -1,5 +1,5 @@
 <div class="card">
-    <button id="product-hover-section" (click)="openInfoDialog()">
+    <button id="product-hover-section"  (click)="openInfoDialog()">
         <div *ngIf="showDescription | async" class="product-description bg-gray-light rounded-t">
             <p class="font-bold">Description</p>
             <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="viewport">

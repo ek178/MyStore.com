@@ -50,13 +50,14 @@ export class RegisterComponent implements OnInit {
         });
 
         this.passwordFormGroup = this.fb.group({
-            username: [null, Validators.required],
+            username: [null, [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
             password: [
                 null,
                 Validators.compose(
                     [
                         Validators.required,
-                        Validators.minLength(6)
+                        Validators.minLength(6),
+                        Validators.pattern('[a-zA-Z0-9]*')
                     ]
                 )
             ]
@@ -81,7 +82,7 @@ export class RegisterComponent implements OnInit {
             phone_number: this.accountFormGroup.value.phone,
             username: this.passwordFormGroup.value.username,
             password: this.passwordFormGroup.value.password,
-            admin: this.admin.checked,
+            is_staff: false,
         });
     }
 }

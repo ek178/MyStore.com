@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ProductsService} from '../../services/products.service';
 import {ToastrService} from 'ngx-toastr';
 import {ProductCategory} from "../../../../models/Category";
+import fileUpload from '@iconify/icons-mdi/file-upload';
 
 @Component({
     selector: 'vex-product-add-form',
@@ -11,7 +12,8 @@ import {ProductCategory} from "../../../../models/Category";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductAddFormComponent implements OnInit {
-
+    fileUploadIcon = fileUpload;
+    filename = ''
     formGroup: FormGroup;
     @Output() createdNewProduct = new EventEmitter();
 
@@ -38,6 +40,7 @@ export class ProductAddFormComponent implements OnInit {
     onChange(event) {
         if (event.target.files.length > 0) {
             const file = event.target.files[0];
+            this.filename = file.name;
             this.formGroup.get('image').setValue(file);
         }
     }
@@ -53,7 +56,6 @@ export class ProductAddFormComponent implements OnInit {
         })
             .then(
                 () => {
-                    this.toaster.success('המוצר נשמר בהצלחה');
                     this.createdNewProduct.emit();
                 },
                 (failRes) => {
@@ -73,6 +75,6 @@ export class ProductAddFormComponent implements OnInit {
     }
 
     changedCategory(category: ProductCategory) {
-        this.formGroup.get('category').setValue(category.id);
+        this.formGroup.get('category').setValue(category._id);
     }
 }

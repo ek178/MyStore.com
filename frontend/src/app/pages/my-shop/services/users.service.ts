@@ -5,7 +5,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ConstantsService} from './constant.service';
 import {ToastrService} from 'ngx-toastr';
 import {BehaviorSubject, Subject, using} from 'rxjs';
-import {CartProduct, ShoppingCartService} from './shopping-cart.service';
+import {OrderItem, ShoppingCartService} from './shopping-cart.service';
 import * as shajs from 'sha.js';
 
 export interface User {
@@ -15,7 +15,7 @@ export interface User {
     phone_number: string;
     first_name: string;
     last_name: string;
-    admin: boolean;
+    is_staff: boolean;
 }
 
 @Injectable({
@@ -32,7 +32,6 @@ export class UsersService {
         private localStorageService: LocalStorageService,
         private router: Router,
         private toaster: ToastrService,
-        private shoppingCartService: ShoppingCartService
     ) {
         constants.init();
 
@@ -65,11 +64,10 @@ export class UsersService {
 
     isAdmin(): boolean {
         if (this._connectedUser.value == null) {
-            this.logout();
             return false;
         }
 
-        return this._connectedUser.value.admin;
+        return this._connectedUser.value.is_staff;
     }
 
     getConnectedUser(): User {
@@ -80,29 +78,16 @@ export class UsersService {
         this._connectedUser.next(null);
         this.router.navigateByUrl('/login').then();
         this.localStorageService.clear();
-        // this._connectedUser.value.shoppingCart = this.shoppingCartService.getShoppingCart();
-        // this.updateShoppingCartInDB(this._connectedUser.value).then(
-        //     () => {
-        //         this.localStorageService.clear();
-        //         this._connectedUser.next(null);
-        //         this.router.navigateByUrl('/login').then();
-        //     },
-        //     () => {
-        //         this.toaster.error('something went wrong, couldn\'t save the changes you\'ve to your shopping cart in system');
-        //     }
-        // );
     }
 
     auth(username: string, password: string) {
-        debugger
         this.http.post<string>(this.constants.shop.http.users.authenticate, {
             username,
             password
         }).toPromise().then(token => {
-                debugger
                 this.updateUserToken(token);
             }
-        );
+        ).catch(_ => this.toaster.error('Failed to log in! Please try different credentials'));
     }
 
     public getUser() {
@@ -136,8 +121,6 @@ export class UsersService {
     }
 
     register(user: User) {
-        //TODO: fix hash
-        //user.password = this.stringToHash(user.password);
         this.http.post<User>(this.constants.shop.http.users.register, user)
             .toPromise()
             .then(

@@ -22,6 +22,7 @@ export interface Shop {
             get: string,
             getCategories: string,
             addOne: string,
+            delete: string,
             uploadImage: string
             updateOne: string
         };
@@ -80,8 +81,9 @@ export class ConstantsService {
                     uploadImage: `${productsRoot}/create/uploadPicture/`,
                     getCategories: `${productsRoot}/categories/`,
                     get: `${productsRoot}/`,
+                    delete: `${productsRoot}/product/delete/`,
                     addOne: `${productsRoot}/create/`,
-                    updateOne: `${productsRoot}/update/`
+                    updateOne: `${productsRoot}/product/update/`
                 },
                 users: {
                     editUser: `${usersRoot}/updateUser/`,

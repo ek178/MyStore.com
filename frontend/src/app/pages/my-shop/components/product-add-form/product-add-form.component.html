@@ -31,8 +31,16 @@
         </mat-form-field>
 
         <vex-select-category (changedCategory)="changedCategory($event)"></vex-select-category>
-        <input type="file" name="profile" (change)="onChange($event)" />
 
+        <input type="file" name="profile" class="file-input" (change)="onChange($event)" #fileUpload>
+
+        <div class="file-upload">
+            {{filename || "No file uploaded yet."}}
+            <button mat-mini-fab color="primary" class="upload-btn"
+                    (click)="fileUpload.click()">
+                <mat-icon [icIcon]="fileUploadIcon"></mat-icon>
+            </button>
+        </div>
         <mat-card-actions fxLayout="row wrap" fxLayoutAlign="end center">
             <button id="reset-button" (click)="formGroup.reset()" [disabled]="!formGroup.dirty"
                     color="primary" mat-button
@@ -43,9 +51,5 @@
                 CREATE
             </button>
         </mat-card-actions>
-
-
-
-
     </form>
 </div>

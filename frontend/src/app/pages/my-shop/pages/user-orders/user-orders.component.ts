@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Order, OrdersService} from "../../services/orders.service";
 import {TableColumn} from "../../../../../@vex/interfaces/table-column.interface";
-import {CartProduct} from "../../services/shopping-cart.service";
+import {OrderItem} from "../../services/shopping-cart.service";
 
 @Component({
     selector: 'vex-user-orders',
@@ -13,12 +13,12 @@ import {CartProduct} from "../../services/shopping-cart.service";
 
 export class UserOrdersComponent implements OnInit {
     orders = new BehaviorSubject<Order[]>([]);
-    tableColumns: TableColumn<CartProduct>[] = [
+    tableColumns: TableColumn<OrderItem>[] = [
         {
             label: 'Name',
             property: 'product',
             type: 'text',
-            pluck: (a) => a.product.name,
+            pluck: (a) => a.product.name || 'product was deleted',
             cssClasses: ['text-center']
         },
         {
@@ -33,13 +33,10 @@ export class UserOrdersComponent implements OnInit {
     constructor(private orderService: OrdersService) {
     }
 
-    getTotalItemPrice(p: CartProduct) {
-        return p.product.price * p.amount;
-    }
 
     ngOnInit() {
         this.orderService.getAllOrders().then(orders => {
-                this.orders.next(orders)
+                this.orders.next(orders);
             }
         );
     }

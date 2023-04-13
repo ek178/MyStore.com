@@ -9,7 +9,7 @@ import {ProductCategory} from "../../../../models/Category";
 })
 export class SelectCategoryComponent {
   @Output() changedCategory = new EventEmitter<ProductCategory>();
-  defaultCategory: ProductCategory ={ id: -1, name: 'all'};
+  defaultCategory: ProductCategory = { _id: -1, name: 'all'};
   constructor(public productsService: ProductsService) {
   }
 

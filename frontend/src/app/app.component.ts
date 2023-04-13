@@ -103,7 +103,7 @@ export class AppComponent {
                     },
                     {
                         type: 'link',
-                        label: 'My Orders',
+                        label: 'Orders',
                         route: '/orders',
                     },
                 ],
@@ -115,7 +115,7 @@ export class AppComponent {
                 children: [
                     {
                         type: 'link',
-                        label: 'Products Edit',
+                        label: 'Manage Products',
                         route: '/products',
                     },
                 ],

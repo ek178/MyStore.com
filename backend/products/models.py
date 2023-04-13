@@ -15,13 +15,10 @@ def product_image_path(instance, filename):
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=200)
+    _id = models.AutoField(primary_key=True, editable=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = _('Product Category')
-        verbose_name_plural = _('Product Categories')
 
     def __str__(self):
         return self.name
@@ -36,11 +33,10 @@ class Product(models.Model):
     description = models.TextField(_('Description'), blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     inStock = models.BooleanField(default=1)
-    category = models.ForeignKey(
-        ProductCategory, related_name="product_list", on_delete=models.SET(get_default_product_category))
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to=product_image_path, blank=True, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
-    _id = models.AutoField(primary_key=True,editable=False)
+    _id = models.AutoField(primary_key=True, editable=False)
 
     class Meta:
         ordering = ('-createdAt',)

@@ -1,14 +1,6 @@
 <div class="overflow-auto w-full p-4" fxLayout="column">
   <div class="border-b py-4 px-6" fxLayout="row" fxLayoutAlign="start center">
-    <h2 class="m-0 title" fxFlex="auto">Recent Order</h2>
-
-    <button mat-icon-button type="button">
-      <mat-icon [icIcon]="icCloudDownload" class="text-secondary"></mat-icon>
-    </button>
-
-    <button mat-icon-button type="button">
-      <mat-icon [icIcon]="icMoreHoriz" class="text-secondary"></mat-icon>
-    </button>
+    <h2 class="m-0 title" fxFlex="auto">Items purchased</h2>
   </div>
 
   <table [dataSource]="dataSource" class="w-full overflow-auto" mat-table matSort>
@@ -20,7 +12,7 @@
     <ng-container *ngFor="let column of columns">
       <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
         <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
-        <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
+        <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ column.pluck(row) }}</td>
       </ng-container>
 
       <ng-container *ngIf="column.type === 'badge'" [matColumnDef]="column.property">

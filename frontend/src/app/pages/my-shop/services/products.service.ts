@@ -6,9 +6,9 @@ import {BehaviorSubject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {UsersService} from './users.service';
 import {ProductCategory} from '../../../models/Category';
-import {Params} from "@angular/router";
-import {CartProduct} from "./shopping-cart.service";
-import {ProductReview} from "../../../models/ProductReview";
+import {Params} from '@angular/router';
+import {OrderItem} from './shopping-cart.service';
+import {ProductReview} from '../../../models/ProductReview';
 
 class Review {
     constructor(public score: number, public text: string, public username: string) {
@@ -81,11 +81,11 @@ export class ProductsService implements OnDestroy {
         return this.http.get<Product[]>(this.constants.shop.http.products.get, {params: urlParams}).toPromise().catch();
     }
 
-    private requestProducts(keyword?: string, page?: string, categoryId?: number, ) {
-        let urlParams: Params = {page: this.currentPage.value, categoryId: this.selectedCategoryId, itemsPerPage: 20};
+    private requestProducts(keyword?: string, page?: string, categoryId?: number) {
+        let urlParams: Params = {page: 1, categoryId: this.selectedCategoryId, itemsPerPage: 100};
 
         if (keyword && keyword !== '') {
-            urlParams = {page: 1, categoryId: this.selectedCategoryId, keyword, itemsPerPage: 20};
+            urlParams = {page: 1, categoryId: this.selectedCategoryId, keyword, itemsPerPage: 100};
         }
 
         this.http.get<any>(this.constants.shop.http.products.get, {params: urlParams}).toPromise().then(
@@ -103,19 +103,18 @@ export class ProductsService implements OnDestroy {
         formData.append('product', JSON.stringify(product));
         formData.append('file', product.image);
         // await this.http.post(this.constants.shop.http.products.uploadImage, formData).toPromise();
-        return this.http.post(this.constants.shop.http.products.addOne, formData).toPromise();
+        return this.http.post(this.constants.shop.http.products.addOne, formData).toPromise().then(_ => {
+            this.toaster.success('product added successfully!');
+            this.requestProducts();
+        });
     }
 
     public update(product: Product) {
-        this.http.put(this.constants.shop.http.products.updateOne, product, {
-            headers: new HttpHeaders({
-                Username: this.usersService.getConnectedUser().username,
-                Password: this.usersService.getConnectedUser().password,
-            })
-        })
-            .toPromise()
-            .then(
-                () => this.toaster.success('product updated successfully!'),
+        this.http.put(this.constants.shop.http.products.updateOne, product).toPromise()
+            .then(_ => {
+                    this.requestProducts();
+                    this.toaster.success('product updated successfully!');
+                },
                 (failRes) => {
                     if (failRes.status === 405) {
                         this.toaster.error('You are not allowed to update products', 'Not an admin!');
@@ -126,23 +125,19 @@ export class ProductsService implements OnDestroy {
             );
     }
 
-    public remove(productName: string) {
-        this.http.delete(this.constants.shop.http.products.addOne, {
-            headers: new HttpHeaders({
-                ProductName: productName,
-                Username: this.usersService.getConnectedUser().username,
-                Password: this.usersService.getConnectedUser().password,
-            })
-        })
+    public remove(productId: number) {
+        this.http.delete(this.constants.shop.http.products.delete, {params: new HttpParams().set('productId', productId.toString())})
             .toPromise()
             .then(
-                () => this.toaster.success('המוצר נמחק בהצלחה'),
+                () => {
+                    this.requestProducts();
+                },
                 (failRes) => {
                     if (failRes.status === 405) {
                         this.toaster.error('You are not allowed to delete products', 'Not an admin!');
                         return;
                     }
-                    this.toaster.error('המוצר לא הוסר, אנא נסה שנית', 'משהו השתבש!');
+                    this.toaster.error('somethine went wrong! try again ');
                 }
             );
     }

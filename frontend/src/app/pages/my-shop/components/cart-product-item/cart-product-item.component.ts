@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {CartProduct, ShoppingCartService} from '../../services/shopping-cart.service';
+import {OrderItem, ShoppingCartService} from '../../services/shopping-cart.service';
 import icTrash from '@iconify/icons-ic/delete';
 import {ConstantsService} from "../../services/constant.service";
 
@@ -17,7 +17,7 @@ export class CartProductItemComponent {
     icTrash = icTrash;
 
     @Input()
-    cartProduct: CartProduct;
+    cartProduct: OrderItem;
 
     setNewAmount(newAmount: number) {
         this.shoppingCartService.setProductAmount(this.cartProduct.product.name, newAmount);

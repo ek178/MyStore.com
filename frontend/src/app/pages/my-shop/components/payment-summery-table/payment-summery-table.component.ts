@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {CartProductsDataSource} from "../../data-sources/cart-products-data-source";
-import {CartProduct, ShoppingCartService} from "../../services/shopping-cart.service";
+import {OrderItem, ShoppingCartService} from "../../services/shopping-cart.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 import {fromEvent} from "rxjs";
@@ -13,7 +13,7 @@ import {fromEvent} from "rxjs";
 })
 export class PaymentSummeryTableComponent implements OnInit, AfterViewInit {
     @Input() title = 'My Shopping Summery';
-    @Input() CartProducts: CartProduct[];
+    @Input() CartProducts: OrderItem[];
 
     dataSource: CartProductsDataSource;
     displayedColumns = ['name', 'amount', 'productTotal'];
@@ -44,7 +44,7 @@ export class PaymentSummeryTableComponent implements OnInit, AfterViewInit {
         ).subscribe();
     }
 
-    sumProductPrice(cartProduct: CartProduct): number {
+    sumProductPrice(cartProduct: OrderItem): number {
         return cartProduct.amount * cartProduct.product.price;
     }
 

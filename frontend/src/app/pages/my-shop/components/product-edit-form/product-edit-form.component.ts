@@ -61,6 +61,7 @@ export class ProductEditFormComponent implements OnInit, OnChanges {
 
     update() {
         this.productsService.update({
+            _id: this.product._id,
             name: this.product.name,
             price: parseFloat(this.formGroup.value.price),
             description: this.formGroup.value.description,
@@ -71,7 +72,7 @@ export class ProductEditFormComponent implements OnInit, OnChanges {
     }
 
     remove() {
-        this.productsService.remove(this.product.name);
+        this.productsService.remove(this.product._id);
         this.product = null;
     }
 

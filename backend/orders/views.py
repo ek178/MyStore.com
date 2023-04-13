@@ -56,9 +56,7 @@ def addOrderItems(request):
             item = OrderItem.objects.create(
                 product=product,
                 order=order,
-                name=product.name,
                 amount=i['amount'],
-                price=i['product']['price'],
             )
 
             # (4) Update Stock
@@ -73,7 +71,10 @@ def addOrderItems(request):
 @permission_classes([IsAuthenticated])
 def getMyOrders(request):
     user = request.user
-    orders = user.order_set.all()
+    if user.is_staff:
+        orders = Order.objects.all()
+    else:
+        orders = user.order_set.all()
     serializer = OrderSerializer(orders, many=True)
     return JsonResponse(serializer.data, safe=False)
 
@@ -89,7 +90,7 @@ def didBuyProduct(request):
 
     for order in serializer.data:
         for item in order['orderItems']:
-            if item['name'] == productName:
+            if item['product']['name'] == productName:
                 didBuy = True
                 break
 

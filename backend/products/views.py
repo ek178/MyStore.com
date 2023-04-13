@@ -16,11 +16,11 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-
+import json
 # Local Import
 from .models import *
 from .serializers import *
-
+import  logging
 
 @csrf_exempt
 @api_view(['GET'])
@@ -54,6 +54,7 @@ def getProducts(request):
     res = {}
     res['products'] = serializer.data
     res['totalProducts'] = paginator.count
+
     return JsonResponse(res, status=201, safe=False)
 
 
@@ -92,26 +93,34 @@ def uploadReview(request):
 
     serializer = ReviewSerializer(review)
 
+    logging.info("uploaded a review from user: " + user.username)
     return JsonResponse(serializer.data, safe=False)
 
 
 # Create a new Product
 @csrf_exempt
+@api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createProduct(request):
-    productData = JSONParser().parse(request.data['product'])
-    productImage = JSONParser().parse(request.data['file'])
-    print(productData)
-    print(productImage)
-    data = productData
-    data.image = productImage
-    print(data)
-    serializer = ProductSerializer(data=data)
-    if serializer.is_valid():
-        serializer.save()
-        return JsonResponse(serializer.data, status=201)
+    productData = json.loads(request.data['product'])
+    productImage = request.data['file']
+    category = ProductCategory.objects.get(_id=productData['category'])
 
-    return JsonResponse(serializer.errors, status=400)
+    product = Product.objects.create(
+        price=productData['price'],
+        name=productData['name'],
+        description=productData['description'],
+        inStock=productData['inStock'],
+        image=productImage,
+        category=category)
+
+    product.save()
+
+    logging.info("Created new product - " + productData['name'])
+    serializer = ProductSerializer(product)
+
+    return JsonResponse(serializer.data, status=201)
+
 
 
 # Update single products
@@ -119,19 +128,19 @@ def createProduct(request):
 
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
-def updateProduct(request, pk):
+def updateProduct(request):
     data = request.data
-    product = Product.objects.get(_id=pk)
-
+    product = Product.objects.get(_id=data["_id"])
+    category = ProductCategory.objects.get(name=data['category'])
     product.name = data["name"]
     product.price = data["price"]
-    product.brand = data["brand"]
-    product.countInStock = data["countInStock"]
-    product.category = data["category"]
+    product.countInStock = data["inStock"]
+    product.category = category
     product.description = data["description"]
 
     product.save()
 
+    logging.info("Admin updated item - " + data["name"])
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
 
@@ -139,9 +148,12 @@ def updateProduct(request, pk):
 # Delete a product
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
-def deleteProduct(request, pk):
-    product = Product.objects.get(_id=pk)
+def deleteProduct(request):
+    productId = request.query_params.get('productId')
+    product = Product.objects.get(_id=productId)
+    logging.info("Admin deleting item - " + product.name)
     product.delete()
+
     return Response("Product deleted successfully")
 
 

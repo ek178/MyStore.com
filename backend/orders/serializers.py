@@ -2,6 +2,8 @@ from django.db.models import fields
 from rest_framework import serializers
 # from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
+
+from products.serializers import ProductSerializer
 from .models import *
 from users.serializers import UserSerializer
 
@@ -12,18 +14,23 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    product = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = OrderItem
         fields = '__all__'
 
+    def get_product(self,obj):
+        return ProductSerializer(obj.product, many=False).data
+
 class OrderSerializer(serializers.ModelSerializer):
     orderItems = serializers.SerializerMethodField(read_only=True)
     shippingAddress = serializers.SerializerMethodField(read_only=True)
-    User = serializers.SerializerMethodField(read_only=True)
+    user = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Order
         fields = '__all__'
+
 
     def get_orderItems(self,obj):
         items = obj.orderitem_set.all()
@@ -37,7 +44,7 @@ class OrderSerializer(serializers.ModelSerializer):
             address = False
         return address
 
-    def get_User(self,obj):
+    def get_user(self,obj):
         items = obj.user
         serializer = UserSerializer(items,many=False)
         return serializer.data

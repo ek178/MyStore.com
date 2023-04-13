@@ -3,13 +3,17 @@
         <section class="flex flex-row justify-center">
             <div class="card">
                 <section class="text-left p-4">
-                    <h4> Order: {{order._id}}#</h4>
+                    <section class="flex flex-row justify-between items-center">
+                        <h4 class="font-medium"> Order: {{order._id}}#</h4> <span> {{order.createdAt | date}}</span>
+                    </section>
+                    <h6 class="font-bold">Ordered By - {{order.user.username}}</h6>
                     <h5> Shipping details</h5>
                     <div> Country: {{order.shippingAddress.country}}</div>
                     <div> City: {{order.shippingAddress.city}}</div>
                     <div> Address: {{order.shippingAddress.address}}</div>
                     <div> Postal Code: {{order.shippingAddress.postalCode}}</div>
                     <div> Total Price: {{order.totalPrice}}$</div>
+
                 </section>
                 <vex-widget-table [columns]="tableColumns" [data]="order.orderItems"></vex-widget-table>
             </div>
