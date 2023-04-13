@@ -28,6 +28,12 @@ in case npm install fails try running the command:
 npm config set legacy-peer-deps true 
 before installing again
 ```
+## running locally - frontend
+
+```bash
+when running locally we need to change the backend urlRoot in constants.service
+from the prod root to the dev root
+```
 
 ## Admin Credentials
 username: admin
