@@ -24,9 +24,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-u&!xm7mo+1x-40=ir$#6!pxe_jn2n1&s%@qmo^y95b3oy#@lom'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*', 'https://mystore-angular.onrender.com']
+PROD_HOST_ENV = os.getenv('PROD_HOST')
+
+host = ''
+
+if PROD_HOST_ENV is not None:
+    host = PROD_HOST_ENV
+
+
+PROD_ORIGIN_ENV = os.getenv('PROD_ORIGIN')
+
+origin = ""
+if PROD_ORIGIN_ENV is not None:
+    origin = PROD_ORIGIN_ENV
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*', host]
+
 
 CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
                       'content-type', 'accept', 'origin', 'authorization')
@@ -34,6 +49,7 @@ CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
 CORS_ALLOWED_ORIGINS = [
     "https://mystore-angular.onrender.com",
     "http://localhost:4200",
+    origin
 ]
 # Application definition
 
