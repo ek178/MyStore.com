@@ -49,6 +49,7 @@ CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
 CORS_ALLOWED_ORIGINS = [
     "https://mystore-angular.onrender.com",
     "http://localhost:4200",
+    "https://643781c6f1730b45c39c0612--storied-pony-6bc7dd.netlify.app",
     origin
 ]
 # Application definition
