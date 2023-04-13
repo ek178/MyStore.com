@@ -1,4 +1,5 @@
 import {HttpClient} from '@angular/common/http';
+import {Injectable, OnInit} from '@angular/core';
 
 export class GlobalConfiguration {
     ShopSocketIoPort: string;
@@ -39,8 +40,6 @@ export interface Shop {
     };
 }
 
-import {Injectable, OnInit} from '@angular/core';
-
 @Injectable()
 export class ConstantsService {
     public urlRoot: string;
@@ -49,7 +48,7 @@ export class ConstantsService {
 
     constructor(private http: HttpClient) {
         // For dev
-        // this.urlRoot = `http://${window.location.hostname}`;
+        // this.urlRoot = `http://${window.location.hostname}:8080`;
 
         // For Prod
          this.urlRoot = 'https://mystore-django-3-11-2.onrender.com';
