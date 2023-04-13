@@ -23,6 +23,8 @@
 2 cd MyStore.com/frontend/
 3 npm install
 4 npm start
+
+if npm install fails try running the command: npm config set legacy-peer-deps true before installing again
 ```
 
 ## Admin Credentials
