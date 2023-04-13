@@ -48,7 +48,11 @@ export class ConstantsService {
     private socketIoPort: string;
 
     constructor(private http: HttpClient) {
-        this.urlRoot = `http://${window.location.hostname}`;
+        // For dev
+        // this.urlRoot = `http://${window.location.hostname}`;
+
+        // For Prod
+         this.urlRoot = 'https://mystore-django-3-11-2.onrender.com';
     }
 
     public init() {
