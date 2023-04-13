@@ -64,7 +64,7 @@ export class ConstantsService {
     }
 
     get shop(): Shop {
-        const root = `${this.urlRoot}:8000`;
+        const root = `${this.urlRoot}`;
         const productsRoot = `${root}/api/products`;
         const ordersRoot = `${root}/api/orders`;
         const usersRoot = `${root}/api/users`;
