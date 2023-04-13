@@ -30,4 +30,4 @@ password: admin
 dockerfile included within front and back directories
 	
 ## Live Website 
-frontend address - https://643781c6f1730b45c39c0612--storied-pony-6bc7dd.netlify.app/
+frontend address - https://genuine-gumption-477c34.netlify.app/
