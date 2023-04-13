@@ -1,6 +1,6 @@
 
 ## Required Software
-- [Python 3.10](https://www.python.org/downloads/) or newer
+- [Python 3.11.2](https://www.python.org/downloads/) or newer
 - [Node.js 14.16 LTS](https://nodejs.org/) or newer (For Tailwind.CSS)
 - [Git](https://git-scm.com/)
 
@@ -9,18 +9,30 @@
 
 ```bash
 1 Clone This Repo
-2 cd backend
-3 pip install -r requirements.txt 
-4 python manage.py runserver
+2 cd MyStore.com/backend/
+3 python -m venv env
+4 .\env\Scripts\activate
+5 pip install -r requirements.txt 
+6 python manage.py runserver
 ```
 
 ## how to run - frontend
 
 ```bash
 1 Clone This Repo
-2 cd frontend
+2 cd MyStore.com/frontend/
 3 npm install
 4 npm start
+
+in case npm install fails try running the command: 
+npm config set legacy-peer-deps true 
+before installing again
+```
+## running locally - frontend
+
+```bash
+when running locally we need to change the backend urlRoot in constants.service
+from the prod root to the dev root
 ```
 
 ## Admin Credentials
