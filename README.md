@@ -1,6 +1,6 @@
 
 ## Required Software
-- [Python 3.12](https://www.python.org/downloads/) or newer
+- [Python 3.11.2](https://www.python.org/downloads/) or newer
 - [Node.js 14.16 LTS](https://nodejs.org/) or newer (For Tailwind.CSS)
 - [Git](https://git-scm.com/)
 
