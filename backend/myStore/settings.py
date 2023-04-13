@@ -40,7 +40,7 @@ origin = "https://example.com"
 if PROD_ORIGIN_ENV is not None:
     origin = PROD_ORIGIN_ENV
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*', host]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
 
 CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
