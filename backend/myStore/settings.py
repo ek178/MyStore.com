@@ -36,7 +36,7 @@ if PROD_HOST_ENV is not None:
 
 PROD_ORIGIN_ENV = os.getenv('PROD_ORIGIN')
 
-origin = ""
+origin = "https://example.com"
 if PROD_ORIGIN_ENV is not None:
     origin = PROD_ORIGIN_ENV
 
