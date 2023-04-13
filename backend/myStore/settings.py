@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-u&!xm7mo+1x-40=ir$#6!pxe_jn2n1&s%@qmo^y95b3oy#@lom
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*', 'https://mystore-angular.onrender.com']
 
 CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
                       'content-type', 'accept', 'origin', 'authorization')
